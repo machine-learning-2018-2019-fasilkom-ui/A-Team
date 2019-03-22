@@ -1,5 +1,5 @@
 import environ
-
+from textblob import TextBlob
 from TweetCollector import TweetCollector
 
 
@@ -18,5 +18,16 @@ if __name__ == '__main__':
     app = App()
 
     tweetCollector = TweetCollector(app.consumer_key, app.consumer_secret, app.access_token, app.access_secret)
-    print(tweetCollector.search_tweets("Jokowi"))
-    print(tweetCollector.search_tweets("Prabowo"))
+    jokowi = tweetCollector.search_tweets("Jokowi")
+    #print(jokowi)
+    #print(tweetCollector.search_tweets("Prabowo"))
+    for tweet in jokowi:
+        print(tweet.text)
+        analysis = TextBlob(tweet.text)
+        # analysis = analysis.translate(from_lang='id', to='en')
+        print(analysis.sentiment)
+        if analysis.sentiment[0]>0:
+            print('Positive')
+        else:
+            print('Negative')
+        print("")

@@ -1,8 +1,8 @@
 import environ
 from textblob import TextBlob
 from TweetCollector import TweetCollector
-from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory #untuk menghilangkan stopword /kata sambung
-
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import \
+    StopWordRemoverFactory  # untuk menghilangkan stopword /kata sambung
 
 
 class App:
@@ -21,16 +21,29 @@ if __name__ == '__main__':
     factory2 = StopWordRemoverFactory()
     stopword = factory2.create_stop_word_remover()
     tweetCollector = TweetCollector(app.consumer_key, app.consumer_secret, app.access_token, app.access_secret)
+
     jokowi = tweetCollector.search_tweets("Jokowi")
-    #print(jokowi)
-    #print(tweetCollector.search_tweets("Prabowo"))
+    prabowo = tweetCollector.search_tweets("Prabowo")
+
     for tweet in jokowi:
-        text = stopword.remove(tweet.text) 
+        text = stopword.remove(tweet.text)
         print(text)
         analysis = TextBlob(text)
-        # analysis = analysis.translate(from_lang='id', to='en')
+        analysis = analysis.translate(from_lang='id', to='en')
         print(analysis.sentiment)
-        if analysis.sentiment[0]>0:
+        if analysis.sentiment[0] > 0:
+            print('Positive')
+        else:
+            print('Negative')
+        print("")
+
+    for tweet in prabowo:
+        text = stopword.remove(tweet.text)
+        print(text)
+        analysis = TextBlob(text)
+        analysis = analysis.translate(from_lang='id', to='en')
+        print(analysis.sentiment)
+        if analysis.sentiment[0] > 0:
             print('Positive')
         else:
             print('Negative')

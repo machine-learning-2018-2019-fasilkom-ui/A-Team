@@ -14,8 +14,8 @@ class TweetCollector:
         self.auth.set_access_token(access_token, access_secret)
         self.api = tweepy.API(self.auth)
 
-    def search_tweets(self, query):
-        return self.api.search(query)
+    def search_tweets(self, query, count=10):
+        return self.api.search(query, count=count)
 
 if __name__ == '__main__':
     env = environ.Env(DEBUG=(bool, False), )
@@ -34,11 +34,8 @@ if __name__ == '__main__':
     tweets_jokowi = []
     tweets_prabowo = []
 
-    jokowi = tweetCollector.search_tweets("Jokowi")
-    prabowo = tweetCollector.search_tweets("Prabowo")
-
-    jokowi = tweetCollector.search_tweets("Jokowi")
-    prabowo = tweetCollector.search_tweets("Prabowo")
+    jokowi = tweetCollector.search_tweets("Jokowi", count=100)
+    prabowo = tweetCollector.search_tweets("Prabowo", count=100)
 
     for tweet in jokowi:
         text = stopword.remove(tweet.text)

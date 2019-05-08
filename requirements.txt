@@ -6,6 +6,7 @@ idna==2.8
 nltk==3.4
 oauthlib==3.0.1
 PySocks==1.6.8
+python-twitter
 requests==2.21.0
 requests-oauthlib==1.2.0
 Sastrawi==1.0.1

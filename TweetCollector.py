@@ -34,8 +34,8 @@ if __name__ == '__main__':
     tweets_jokowi = []
     tweets_prabowo = []
     print("Starting...")
-    jokowi = tweetCollector.search_tweets("Jokowi", count=10000)
-    prabowo = tweetCollector.search_tweets("Prabowo", count=10000)
+    jokowi = tweetCollector.search_tweets("Jokowi", count=3200)
+    prabowo = tweetCollector.search_tweets("Prabowo", count=3200)
 
     # Mengambil jangka waktu 10 hari sebelum dan setelah pemungutan suara
     start_date = datetime.datetime(2019, 4, 7)
@@ -48,7 +48,8 @@ if __name__ == '__main__':
         #     tweets_jokowi.append(tweet.text)
         #     i_jokowi += 1
         #     if i_jokowi % 100 == 0: print("Getting Jokowi Tweets:", str(i_jokowi), "of", str(MAX_TWEETS))
-        tweets_jokowi.append(tweet.text)
+        if tweet.text != "":
+            tweets_jokowi.append(tweet.text)
 
     i_prabowo = 0
     for tweet in prabowo:
@@ -56,7 +57,8 @@ if __name__ == '__main__':
         #     tweets_prabowo.append(tweet.text)
         #     i_prabowo += 1
         #     if i_prabowo % 100 == 0: print("Getting Prabowo Tweets:", str(i_prabowo), "of", str(MAX_TWEETS))
-        tweets_prabowo.append(tweet.text)
+        if tweet.text != "":
+            tweets_prabowo.append(tweet.text)
 
     with open('jokowi_dataset.txt', 'w', encoding="utf-8") as writer:
         writer.writelines("%s\n" % line for line in tweets_jokowi)

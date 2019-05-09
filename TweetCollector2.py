@@ -20,8 +20,9 @@ api = twitter.Api(consumer_key=consumer_key,
 #print(api.VerifyCredentials())
 tweets_jokowi = []
 tweets_prabowo = []
-hashtag_jokowi = ['#JokoWinElection', '#01TheChampion', '#AllahMuliakanJokowi']
-hashtag_prabowo = ['#TheVictoryOfPrabowo', '#BesokTusukPrabowoSandi', 'BismillahInsyaAllahPrabowo']
+hashtag_jokowi = ['#JokoWinElection', '#01TheChampion', '#AllahMuliakanJokowi', '#JokowiLagi', '#JokowiAmin']
+hashtag_prabowo = ['#TheVictoryOfPrabowo', '#BesokTusukPrabowoSandi', '#BismillahInsyaAllahPrabowo', 
+        '#2019GantiPresiden', '#PrabowoSandiSolusiNKRI']
 print("Starting...")
 jokowi = []
 prabowo = []
@@ -30,17 +31,19 @@ tanggal_sekitar = ['2019-04-07', '2019-04-08', '2019-04-09', '2019-04-10', '2019
     '2019-04-12', '2019-04-13', '2019-04-14', '2019-04-15', '2019-04-16', '2019-04-17',
     '2019-04-18', '2019-04-19', '2019-04-20', '2019-04-21', '2019-04-22', '2019-04-23',
     '2019-04-24', '2019-04-25', '2019-04-26', '2019-04-27']
-# Max hanya bisa get 100
 
+# Max hanya bisa get 100
 print("Getting Jokowi tweets...")
 for hashtag in hashtag_jokowi:
-    for tanggal in tanggal_sekitar:
-        jokowi += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+    #for tanggal in tanggal_sekitar:
+    #    jokowi += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+    jokowi += api.GetSearch(hashtag, count=400)
 
 print("Getting Prabowo tweets...")  
 for hashtag in hashtag_prabowo:
-    for tanggal in tanggal_sekitar:
-        prabowo += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+    #for tanggal in tanggal_sekitar:
+    #    prabowo += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+    prabowo += api.GetSearch(hashtag, count=400)
 
 for tweet in jokowi:
     if tweet.text != "":

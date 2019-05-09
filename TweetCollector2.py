@@ -25,37 +25,40 @@ hashtag_prabowo = ['#TheVictoryOfPrabowo', '#BesokTusukPrabowoSandi', 'Bismillah
 print("Starting...")
 jokowi = []
 prabowo = []
-for i in hashtag_jokowi:
-    jokowi += api.GetSearch(i, count=320)
-for i in hashtag_prabowo:
-    prabowo += api.GetSearch(i, count=320)
-i_jokowi = 0
+# Pencoblosan tanggal 17 April 2019, ambil tanggal di sekitar
+tanggal_sekitar = ['2019-04-07', '2019-04-08', '2019-04-09', '2019-04-10', '2019-04-11',
+    '2019-04-12', '2019-04-13', '2019-04-14', '2019-04-15', '2019-04-16', '2019-04-17',
+    '2019-04-18', '2019-04-19', '2019-04-20', '2019-04-21', '2019-04-22', '2019-04-23',
+    '2019-04-24', '2019-04-25', '2019-04-26', '2019-04-27']
+# Max hanya bisa get 100
+
+print("Getting Jokowi tweets...")
+for hashtag in hashtag_jokowi:
+    for tanggal in tanggal_sekitar:
+        jokowi += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+
+print("Getting Prabowo tweets...")  
+for hashtag in hashtag_prabowo:
+    for tanggal in tanggal_sekitar:
+        prabowo += api.GetSearch(hashtag, count=100, since=tanggal, until=tanggal)
+
 for tweet in jokowi:
-    # if tweet.created_at < end_date and tweet.created_at > start_date and i_jokowi < MAX_TWEETS:
-    #     tweets_jokowi.append(tweet.text)
-    #     i_jokowi += 1
-    #     if i_jokowi % 100 == 0: print("Getting Jokowi Tweets:", str(i_jokowi), "of", str(MAX_TWEETS))
     if tweet.text != "":
         text = tweet.text
         text = re.sub('\n', ' ', text)
-        tweets_jokowi.append(tweet.text.strip())
+        text = text.replace('\n', ' ')
+        tweets_jokowi.append(text.strip())
 
-i_prabowo = 0
+
 for tweet in prabowo:
-    # if tweet.created_at < end_date and tweet.created_at > start_date and i_prabowo < MAX_TWEETS:
-    #     tweets_prabowo.append(tweet.text)
-    #     i_prabowo += 1
-    #     if i_prabowo % 100 == 0: print("Getting Prabowo Tweets:", str(i_prabowo), "of", str(MAX_TWEETS))
     if tweet.text.strip() != "":
         text = tweet.text
         text = re.sub('\n', ' ', text)
-        tweets_prabowo.append(tweet.text.strip())
-
-tweets_jokowi = [line for line in tweets_jokowi if line.strip() != '']
-tweets_prabowo = [line for line in tweets_prabowo if line.strip() != '']
+        text = text.replace('\n', ' ')
+        tweets_prabowo.append(text.strip())
 
 with open('jokowi_dataset.txt', 'w', encoding="utf-8") as writer:
-    writer.writelines("%s\n" % line.strip() for line in tweets_jokowi)
+    writer.writelines("%s\n" % line for line in tweets_jokowi)
 
 with open('prabowo_dataset.txt', 'w', encoding="utf-8") as writer:
-    writer.writelines("%s\n" % line.strip() for line in tweets_prabowo)
+    writer.writelines("%s\n" % line for line in tweets_prabowo)
